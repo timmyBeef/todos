@@ -12,7 +12,7 @@
 
 ### This is the SpringBoot based RESTful API. It supports the below functions:
 
-* Application support H2 in-mem DB and Postgres DB, by default postgres DB is being used. If you want to use H2 in-mem DB, application-h2.yaml shall be used.
+* Application support H2 in-mem DB and Postgres DB, by default H2 in-mem DB is being used. 
 * DB data is pre-populated by Flyway
 
 ## Topics
