@@ -9,6 +9,7 @@ import com.demo.todos.repository.IListRepository;
 import com.demo.todos.repository.ItemRepository;
 import com.demo.todos.repository.UserRepository;
 import com.github.javafaker.Faker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,59 +43,51 @@ class TodoServiceTest {
     @Autowired
     Faker faker;
 
+    // init data from flyway & h2, add user with id = 1, and one list, 3 items
 
     @Test
     void findAllListByUserId() {
-        givenDB1ListAnd3Items();
         findListSizeShouldBeOne();
     }
 
     @Test
     void findItemsByIListId() {
-        givenDB1ListAnd3Items();
         findItemSizeShouldBe3();
     }
 
     @Test
     void createIList() {
-        givenDB1ListAnd3Items();
         createOneMoreListSizeShouldBe2();
     }
 
     @Test
     void saveIList() {
-        givenDB1ListAnd3Items();
         saveListNameShouldBeSame();
     }
 
     @Test
     void createItem() {
-        givenDB1ListAnd3Items();
         createOneMoreItemSizeShouldBe4();
     }
 
     @Test
     void saveItem() {
-        givenDB1ListAnd3Items();
         saveItemNameShouldBeSame();
     }
 
     @Test
     void saveMovedItemsOrder() {
-        givenDB1ListAnd3Items();
         saveMovedItemsOrderShouldBeSame();
 
     }
 
     @Test
     void removeList() {
-        givenDB1ListAnd3Items();
         removeListShouldBeNull();
     }
 
     @Test
     void removeItem() {
-        givenDB1ListAnd3Items();
         removeItemShouldBeNull();
     }
 
@@ -163,27 +156,5 @@ class TodoServiceTest {
                 , 1L);
         assertEquals(2, iListRepository.findAll().size());
     }
-
-    // add user with id = 1, and one list, 3 items
-    private void givenDB1ListAnd3Items() {
-        IList list = new IList(faker.funnyName().name(), LocalDateTime.now());
-
-        Item item1 = getItem(faker, 10);
-        Item item2 = getItem(faker, 12);
-        Item item3 = getItem(faker, 13);
-        list.addItem(item1);
-        list.addItem(item2);
-        list.addItem(item3);
-        User user = new User("name", "pass");
-        user.addList(list);
-        userRepository.save(user);
-    }
-
-    private Item getItem(Faker faker, int days) {
-        return new Item(
-                faker.harryPotter().quote(),
-                LocalDateTime.now().plusDays(days));
-    }
-
 
 }
